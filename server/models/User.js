@@ -20,12 +20,18 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    chats: [
+    friends: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Chat",
+        ref: "User",
       },
     ],
+    // chats: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Chat",
+    //   },
+    // ],
   },
   {
     toJSON: {
