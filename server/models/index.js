@@ -1,3 +1,3 @@
 const User = require("./User");
-
-module.exports = { User };
+const Chat = require("./Chat");
+module.exports = { User, Chat };

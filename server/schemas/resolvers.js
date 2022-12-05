@@ -22,6 +22,10 @@ const resolvers = {
         .select("-__v -password")
         .populate("friends");
     },
+    chats: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Thought.find(params).sort({ createdAt: -1 });
+    },
   },
 
   Mutation: {
@@ -46,6 +50,25 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+    },
+
+    addChat: async (parent, args, context) => {
+      if (context.user) {
+        const thought = await Chat.create({
+          ...args,
+          username: context.user.username,
+        });
+
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { thoughts: chat._id } },
+          { new: true }
+        );
+
+        return thought;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
     },
 
     addFriend: async (parent, { friendId }, context) => {

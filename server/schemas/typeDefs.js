@@ -11,6 +11,13 @@ const typeDefs = gql`
     friends: [User]
   }
 
+  type Chat {
+    _id: ID
+    chatText: String
+    createdAt: String
+    username: String
+  }
+
   type Auth {
     token: ID!
     user: User
