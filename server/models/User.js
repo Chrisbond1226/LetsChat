@@ -20,18 +20,18 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
     friends: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
-    // chats: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Chat",
-    //   },
-    // ],
   },
   {
     toJSON: {

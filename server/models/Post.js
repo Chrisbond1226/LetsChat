@@ -1,9 +1,10 @@
 const { Schema, model } = require("mongoose");
+const commentSchema = require("./Comment");
 const dateFormat = require("../utils/dateFormat");
 
-const chatSchema = new Schema(
+const postSchema = new Schema(
   {
-    chatText: {
+    postText: {
       type: String,
       required: true,
       maxlength: 280,
@@ -17,6 +18,7 @@ const chatSchema = new Schema(
       type: String,
       required: true,
     },
+    comments: [commentSchema],
   },
   {
     toJSON: {
@@ -25,6 +27,10 @@ const chatSchema = new Schema(
   }
 );
 
-const Chat = model("Chat", chatSchema);
+postSchema.virtual("commentCount").get(function () {
+  return this.comments.length;
+});
 
-module.exports = Chat;
+const Post = model("Post", postSchema);
+
+module.exports = Post;

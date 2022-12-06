@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User } = require("../models");
+const { User, Post } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -8,23 +8,32 @@ const resolvers = {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
           .select("-__password")
-          .populate("friends");
-
+          .populate("friends")
+          .populate("posts");
         return userData;
       }
       throw new AuthenticationError("Not logged in");
     },
     users: async () => {
-      return User.find().select("-__v -password").populate("friends");
+      return User.find()
+        .select("-__v -password")
+        .populate("friends")
+        .populate("posts");
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select("-__v -password")
+        .populate("posts")
         .populate("friends");
     },
-    chats: async (parent, { username }) => {
+
+    posts: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Thought.find(params).sort({ createdAt: -1 });
+      return Post.find(params).sort({ createdAt: -1 });
+    },
+
+    post: async (parent, { _id }) => {
+      return Post.findOne({ _id });
     },
   },
 
@@ -52,23 +61,39 @@ const resolvers = {
       return { token, user };
     },
 
-    addChat: async (parent, args, context) => {
+    addPost: async (parent, args, context) => {
       if (context.user) {
-        const thought = await Chat.create({
+        const post = await Post.create({
           ...args,
           username: context.user.username,
         });
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { thoughts: chat._id } },
+          { $push: { posts: post._id } },
           { new: true }
         );
 
-        return thought;
+        return post;
       }
 
       throw new AuthenticationError("You need to be logged in!");
+    },
+
+    addComment: async (parent, { postId, commentBody }, context) => {
+      if (context.user) {
+        const updatedPost = await Post.findOneAndUpdate(
+          { _id: postId },
+          {
+            $push: {
+              comments: { commentBody, username: context.user.username },
+            },
+          },
+          { new: true, runValidators: true }
+        );
+        return updatedPost;
+      }
+      throw new AuthenticationError("You need to be logged in");
     },
 
     addFriend: async (parent, { friendId }, context) => {
