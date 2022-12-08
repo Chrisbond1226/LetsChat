@@ -1,11 +1,8 @@
 import React from "react";
-
-//Importing components
 import PostList from "../components/PostList";
 import PostForm from "../components/PostForm";
 import FriendsList from "../components/FriendsList";
 
-//Importing other important stuff
 import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import { QUERY_POSTS, QUERY_ME_BASIC } from "../utils/queries";
@@ -19,21 +16,21 @@ const Home = () => {
 
   return (
     <main>
-      <div>
+      <div className="flex-row justify-space-between">
         {loggedIn && (
-          <div>
+          <div className="col-12 mb-3">
             <PostForm />
           </div>
         )}
-        <div>
+        <div className={`col-12 mb-3 ${loggedIn && "col-lg-8"}`}>
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <PostList posts={posts} title="Posts" />
+            <PostList posts={posts} title="Some Feed for Post(s)..." />
           )}
         </div>
         {loggedIn && userData ? (
-          <div>
+          <div className="col-12 col-lg-3 mb-3">
             <FriendsList
               username={userData.me.username}
               friendCount={userData.me.friendCount}
