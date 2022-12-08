@@ -11,8 +11,8 @@ import { useQuery } from '@apollo/client';
 import { QUERY_POSTS, QUERY_ME_BASIC } from '../utils/queries';
 
 const Home = () => {
-	const { loading, data} = useQuery(QUERY_POSTS);
-	const { data: userData} = useQuery(QUERY_ME_BASIC);
+	const { loading, data } = useQuery(QUERY_POSTS);
+	const { data: userData } = useQuery(QUERY_ME_BASIC);
 	const posts = data?.posts || [];
 
 	const loggedIn = Auth.loggedIn();
@@ -22,7 +22,7 @@ const Home = () => {
 			<div>
 				{loggedIn && (
 					<div>
-						<ThoughtForm />
+						<PostForm />
 					</div>
 				)}
 				<div>
