@@ -10,7 +10,7 @@ const CommentForm = ({ postId }) => {
 
   // update state based on form input changes
   const handleChange = (event) => {
-    if (event.target.value <= 280) {
+    if (event.target.value.length <= 280) {
       setBody(event.target.value);
       setCharacterCount(event.target.value.length);
     }
