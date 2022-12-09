@@ -55,17 +55,25 @@ const PostForm = () => {
 
   return (
     <div>
-      <p>
-        Character Count: {characterCount}/{maxPostCharacters}
-        {error && <span>Something went wrong...</span>}
-      </p>
-      <form onSubmit={handleSubmit}>
+      <form
+        className="flex-row justify-center justify-space-between-md align-stretch"
+        onSubmit={handleSubmit}
+      >
         <textarea
+          className="form-input col-12 col-md-9"
           placeholder="What is on your mind?"
           value={postText}
           onChange={handleChange}
-        ></textarea>
-        <button type="submit">Submit</button>
+        ></textarea>{" "}
+        <br></br>
+        <p>
+          Character Count: {characterCount}/{maxPostCharacters}
+          {error && <span>Something went wrong...</span>}
+        </p>
+        <br></br>
+        <button className="button-29 btn" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );

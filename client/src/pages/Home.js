@@ -26,7 +26,7 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <PostList posts={posts} title="Some Feed for Post(s)..." />
+            <PostList posts={posts} title="What's the Word?" />
           )}
         </div>
         {loggedIn && userData ? (

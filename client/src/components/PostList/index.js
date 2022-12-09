@@ -12,16 +12,22 @@ const PostList = ({ posts, title }) => {
       {posts &&
         posts.map((post) => (
           <div key={post._id}>
-            <p>
-              <Link to={`/profile/${post.username}`}>{post.username}</Link>{" "}
-              posted on {post.createdAt}
-            </p>
+            <h4 className="card-header">
+              <Link
+                to={`/profile/${post.username}`}
+                style={{ fontWeight: 700 }}
+                className="text-light"
+              >
+                {post.username}
+              </Link>{" "}
+            </h4>
             <div>
               <Link to={`/post/${post._id}`}>
-                <p>{post.postText}</p>
-                <p>
+                <p className="card-body">{post.postText}</p>
+                <p className="comments">
+                  Posted on {post.createdAt} <br></br>
                   Comments: {post.commentCount} ||{" "}
-                  {post.commentCount ? "View" : "Start"} the discussion!
+                  {post.commentCount ? "View" : "Start"} the commentary!
                 </p>
               </Link>
             </div>
