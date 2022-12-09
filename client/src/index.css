@@ -3,7 +3,7 @@
   --secondary: #99f7f2;
   --tertiary: #b2c2c1;
   --quatrinary: #cadbda;
-  --light: #e1f5f4;
+  --light:  #59C9A5;
   --dark: #6c7575;
   --error: rgb(228, 46, 1);
   --border-radius: 0.3rem;
@@ -840,11 +840,11 @@ nav a:hover {
 
 /* BACKGROUND UTILS */
 .bg-primary {
-  background-color: var(--primary);
+  background-color: #59C9A5;
 }
 
 .bg-secondary {
-  background-color: var(--secondary);
+  background-color:   #B9E3C6;
 }
 
 .bg-tertiary {
